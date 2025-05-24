@@ -48,6 +48,15 @@ namespace APBD_11.Migrations
                     b.HasKey("DoctorId");
 
                     b.ToTable("Doctor", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            DoctorId = 1,
+                            Email = "daniel.saga@gmail.com",
+                            FirstName = "Daniel",
+                            LastName = "Saga"
+                        });
                 });
 
             modelBuilder.Entity("APBD_11.Models.Medicament", b =>
@@ -76,6 +85,15 @@ namespace APBD_11.Migrations
                     b.HasKey("MedicamentId");
 
                     b.ToTable("Medicament", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            MedicamentId = 1,
+                            Description = "Take max 1 time daily.",
+                            Name = "Ibuprofen ",
+                            Type = "Nonsteroidal anti-inflammatory drug (NSAID)"
+                        });
                 });
 
             modelBuilder.Entity("APBD_11.Models.Patient", b =>

@@ -1,6 +1,9 @@
-﻿namespace APBD_11.Services;
+﻿using APBD_11.DTOs;
 
-public class IDbService
+namespace APBD_11.Services;
+
+public interface IDbService
 {
-    
+    Task AddPrescriptionAsync(AddPrescriptionRequest request);
+    Task<PatientDataResponse?> GetPatientDetailsAsync(int patientId);
 }

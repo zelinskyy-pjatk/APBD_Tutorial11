@@ -1,6 +1,27 @@
 @APBD_11_HostAddress = http://localhost:5298
 
-GET {{APBD_11_HostAddress}}/weatherforecast/
+### -- Get Patients Details -- ###
+GET {{APBD_11_HostAddress}}/api/patients/1
 Accept: application/json
 
-###
+### -- Add Prescription -- ##
+POST {{APBD_11_HostAddress}}/api/prescriptions
+Content-Type: application/json
+
+{
+  "patient": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "dateOfBirth": "1990-01-01"
+  },
+  "doctorId": 1,
+  "date": "2025-05-24",
+  "dueDate": "2025-05-30",
+  "medicaments": [
+    {
+      "medicamentId": 1,
+      "dose": 5,
+      "description": "Take after having meals"
+    }
+  ]
+}

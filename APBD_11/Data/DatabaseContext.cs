@@ -27,5 +27,21 @@ public class DatabaseContext : DbContext
         modelBuilder.Entity<Medicament>().ToTable("Medicament");
         modelBuilder.Entity<Prescription>().ToTable("Prescription");
         modelBuilder.Entity<PrescriptionMedicament>().ToTable("PrescriptionMedicament");
+
+        modelBuilder.Entity<Doctor>().HasData(new Doctor
+        {
+            DoctorId = 1,
+            FirstName = "Daniel",
+            LastName = "Saga",
+            Email = "daniel.saga@gmail.com"
+        });
+
+        modelBuilder.Entity<Medicament>().HasData(new Medicament
+        {
+            MedicamentId = 1,
+            Name = "Ibuprofen ",
+            Description = "Take max 1 time daily.",
+            Type = "Nonsteroidal anti-inflammatory drug (NSAID)"
+        });
     }
 }
