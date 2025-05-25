@@ -12,7 +12,6 @@ public class PrescriptionDto
 public class MedicamentDto
 {
     public int MedicamentId { get; set; }
-    public string Name { get; set; }
     public int? Dose { get; set; }
     public string Description { get; set; }
 }
@@ -21,4 +20,5 @@ public class DoctorDto
 {
     public int DoctorId { get; set; }
     public string FirstName { get; set; }
+    public string LastName { get; set; }
 }

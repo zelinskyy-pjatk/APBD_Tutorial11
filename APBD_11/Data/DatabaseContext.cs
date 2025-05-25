@@ -39,7 +39,7 @@ public class DatabaseContext : DbContext
         modelBuilder.Entity<Medicament>().HasData(new Medicament
         {
             MedicamentId = 1,
-            Name = "Ibuprofen ",
+            Name = "Ibuprofen",
             Description = "Take max 1 time daily.",
             Type = "Nonsteroidal anti-inflammatory drug (NSAID)"
         });

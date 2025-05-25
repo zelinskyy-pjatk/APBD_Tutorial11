@@ -20,10 +20,11 @@ public class DbService : IDbService
         var doctor = await _context.Doctors.FindAsync(request.DoctorId);
         if (doctor == null)
             throw new ArgumentException("Doctor does not exist.");
+
+        var patient = _context.Patients.FirstOrDefault(p => p.FirstName == request.Patient.FirstName
+                                                            && p.LastName == request.Patient.LastName
+                                                            && p.DateOfBirth == request.Patient.DateOfBirth);
         
-        var patient = _context.Patients.FirstOrDefault(p => p.FirstName == request.Patient.FirstName 
-                                                                && p.LastName == request.Patient.LastName 
-                                                                && p.DateOfBirth == request.Patient.DateOfBirth);
         if (patient == null)
         {
             patient = new Patient
@@ -35,7 +36,17 @@ public class DbService : IDbService
             _context.Patients.Add(patient);
             await _context.SaveChangesAsync();
         }
-
+        
+        var existingPrescription = await _context.Prescriptions.Include(p => p.PrescriptionMedicaments)
+            .FirstOrDefaultAsync(p => 
+                p.PatientId == patient.PatientId &&
+                p.DoctorId == doctor.DoctorId && 
+                p.Date == request.Date && 
+                p.DueDate == request.DueDate);
+        
+        if (existingPrescription != null)
+            throw new ArgumentException("Prescription already exists.");
+        
         var prescription = new Prescription
         {
             Date = request.Date,
@@ -53,6 +64,7 @@ public class DbService : IDbService
             
             prescription.PrescriptionMedicaments.Add(new PrescriptionMedicament
             {
+                PrescriptionId = prescription.PrescriptionId,
                 MedicamentId = medic.MedicamentId,
                 Dose = medic.Dose,
                 Details = medic.Description
@@ -93,13 +105,14 @@ public class DbService : IDbService
                         Doctor = new DoctorDto()
                         {
                             DoctorId = p.Doctor.DoctorId,
-                            FirstName = p.Doctor.FirstName
+                            FirstName = p.Doctor.FirstName,
+                            LastName = p.Doctor.LastName
                         },
                         Medicaments = p.PrescriptionMedicaments.Select(pm => new MedicamentDto
                         {
                             MedicamentId = pm.MedicamentId,
                             Dose = pm.Dose,
-                            Description = pm.Details
+                            Description = pm.Medicament.Description
                         }).ToList()
                     }
                 ).ToList()
