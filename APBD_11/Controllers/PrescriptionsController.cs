@@ -19,7 +19,7 @@ public class PrescriptionsController : ControllerBase
         try
         {
             await _service.AddPrescriptionAsync(request);
-            return Ok();
+            return Created();
         }
         catch (ArgumentException e)
         {
